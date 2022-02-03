@@ -23,6 +23,15 @@ def start_lottery():
     starting_tx.wait(1)
     print("The lottery is started.")
 
+def enter_lottery():
+    account = get_account()
+    lottery = Lottery[-1]
+    value = lottery.getEntranceFee() + 100_000_000 # Tack on a little bit of Wei to make sure it's over the minimum amount
+    tx = lottery.enter({"from": account, "value": value})
+    tx.wait(1)
+    print("You entered the lottery.")
+
 def main():
     deploy_lottery()
     start_lottery()
+    enter_lottery()
