@@ -24,7 +24,7 @@ contract_to_mock = {
 
 def get_contract(contract_name):
     """
-    This function will grab the contract addresses from
+    This function grabs the contract addresses from
     brownie-config if denied; otherwise, it will deploy a mock
     version of that contract, and return that mock contract.
 
@@ -53,7 +53,7 @@ def deploy_mocks(decimals=DECIMALS, initial_value=INITIAL_VALUE):
     MockV3Aggregator.deploy(decimals, initial_value, {"from": account})
     link_token = LinkToken.deploy({"from": account})
     VRFCoordinatorMock.deploy(link_token.address, {"from": account})
-    print("Deployed")
+    print("Contract deployed")
 
 def fund_with_link(contract_address, account=None, link_token=None, amount=100_000_000_000_000_000): # 0.1 LINK
     account = account if account else get_account()
@@ -62,5 +62,5 @@ def fund_with_link(contract_address, account=None, link_token=None, amount=100_0
     # link_token_contract = interface.LinkTokenInterface(link_token.address)
     # tx = link_token_contract.transfer(contract_address, amount, {"from": account})
     tx.wait(1)
-    print("Fund contract.")
+    print("Contract funded")
     return tx

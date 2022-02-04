@@ -19,11 +19,9 @@ def deploy_lottery():
 def start_lottery():
     account = get_account()
     lottery = Lottery[-1]
-    starting_tx = lottery.startLottery({
-        "from": account
-    })
+    starting_tx = lottery.startLottery({"from": account})
     starting_tx.wait(1)
-    print("The lottery is started.")
+    print("Started lottery")
 
 def enter_lottery():
     account = get_account()
@@ -31,18 +29,18 @@ def enter_lottery():
     value = lottery.getEntranceFee() + 100_000_000 # Tack on a little bit of Wei to make sure it's over the minimum amount
     tx = lottery.enter({"from": account, "value": value})
     tx.wait(1)
-    print("You entered the lottery.")
+    print("Entered lottery")
 
 def end_lottery():
     account = get_account()
     lottery = Lottery[-1]
-    # Fund the contract
-    # End the lottery
+    # Fund the contract, then end the lottery
     tx = fund_with_link(lottery.address)
     tx.wait(1)
     ending_transaction = lottery.endLottery({"from": account})
     ending_transaction.wait(1)
-    time.sleep(60)
+    print("Waiting (sleep)...")
+    time.sleep(300)
     print(f"{lottery.recentWinner()} is the new winner.")
 
 def main():
